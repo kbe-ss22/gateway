@@ -2,6 +2,9 @@ spring:
   profiles:
     active: usage_message
 
+server:
+  port: 8081
+
 logging:
   level:
     org: ERROR
@@ -9,3 +12,9 @@ logging:
 tutorial:
   client:
     duration: 10000
+
+keycloak:
+  realm: kbe
+  auth-server-url: http://localhost:8080
+  resource: spring-boot-gateway
+  bearer-only: true
