@@ -12,6 +12,7 @@ public class HardwareSender {
     private RabbitTemplate rabbitTemplate;
 
     public Object sendGetHardware(Currency currency){
+        System.out.println("sendGetHardware() triggered with currency: "+currency.toString());
         return rabbitTemplate.convertSendAndReceive(
                 RabbitConfig.GETINFORMATIONEXCHANGE,
                 RabbitConfig.GETHARDWAREROUTINGKEY, currency);
