@@ -14,7 +14,7 @@ public class ProductController {
     ProductSender productSender;
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/products", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> getProducts(@RequestParam(required = false) String currencyParam) {
         Date date = new Date();
         String dateString = (1900+date.getYear())+"-"+ (date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds()+"  ";
