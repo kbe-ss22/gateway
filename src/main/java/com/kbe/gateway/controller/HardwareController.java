@@ -600,7 +600,7 @@ public class HardwareController {
     HardwareSender hardwareSender;
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(value = "/hardwarecomponents", method = RequestMethod.GET)
+    @RequestMapping(value = "/hardwarecomponents", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<String> getHardwareComponents(@RequestParam(required = false) String currencyParam) {
         Date date = new Date();
         String dateString = (1900+date.getYear())+"-"+ (date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds()+"  ";
