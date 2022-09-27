@@ -17,7 +17,7 @@ public class ProductSender {
     public Object sendGetProducts(Currency currency){
         var received = rabbitTemplate.convertSendAndReceive(
                 RabbitConfig.GETINFORMATIONEXCHANGE,
-                RabbitConfig.GETPRODUCTSQUEUE, currency);
+                RabbitConfig.GETPRODUCTSROUTINGKEY, currency);
         return received;
     }
 
