@@ -18,13 +18,15 @@ public class ProductController {
     public ResponseEntity<String> getProducts(@RequestParam(required = false) String currencyParam) {
         Date date = new Date();
         String dateString = (1900+date.getYear())+"-"+ (date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds()+"  ";
-        System.out.println(dateString+"getHardwareComponents triggered");
+        System.out.println(dateString+"getProducts triggered");
         //String json = "{\"id\":0,\"name\":\"wunder\",\"hardware\":[{\"id\":0,\"type\":\"gpu\",\"name\":\"rx 6800\",\"description\":\"fast\",\"price\":222.42,\"stock\":5}";
 
-        Currency currency;
+                Currency currency;
         if(currencyParam == null) {
+            System.out.println(dateString+"..without param.");
             currency = Currency.EUR;
         } else {
+            System.out.println(dateString+"..with param: "+currencyParam);
             currency =  Currency.valueOf(currencyParam.toUpperCase());
         }
         /*
@@ -37,7 +39,7 @@ public class ProductController {
         }
         */
 
-        String productString = "[ {\n" +
+        String productString = "{ \"productlist\": [ {\n" +
                 "    \"id\" : 84,\n" +
                 "    \"name\" : \"PC 1\",\n" +
                 "    \"hardware\" : [ {\n" +
@@ -365,7 +367,7 @@ public class ProductController {
                 "      \"price\" : 49.900001525878906,\n" +
                 "      \"stock\" : 10\n" +
                 "    } ]\n" +
-                "  } ]";
+                "  } ] }";
         return ResponseEntity.ok(productString);
     }
 /*

@@ -13,7 +13,7 @@ import java.util.Date;
 public class HardwareController {
 
 
-    String hardwarelistJson = "[{\n" +
+    String hardwarelistJson = "{ \"hardwarelist\": [{\n" +
             "    \"id\" : 1,\n" +
             "    \"type\" : \"CASE\",\n" +
             "    \"name\" : \"O11 Dynamic EVO Tempered Glass\",\n" +
@@ -594,7 +594,7 @@ public class HardwareController {
             "    \"description\" : \"Speed:3000 Capacity:2000\",\n" +
             "    \"price\" : 205.0,\n" +
             "    \"stock\" : 10\n" +
-            "  }]";
+            "  }]}";
 
     @Autowired
     HardwareSender hardwareSender;
