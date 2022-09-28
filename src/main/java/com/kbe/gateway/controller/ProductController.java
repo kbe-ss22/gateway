@@ -1,11 +1,16 @@
 package com.kbe.gateway.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kbe.gateway.rabbitmq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ProductController {
@@ -379,12 +384,28 @@ public class ProductController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public void createProduct(
-            @RequestParam String name,
-            @RequestParam int[] hardwareIDs
+    public ResponseEntity<String> createProduct(
+            @RequestBody String name//,
+           // @RequestParam String[] hardwareIDs
     ) {
-        System.out.println(hardwareIDs);
-        productSender.sendCreateProduct(name, hardwareIDs);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            ProductPostEntity res = objectMapper.readValue(name, ProductPostEntity.class);
+            System.out.println(res.getName());
+            System.out.println(res.getHardwareIDs().length);
+            //System.out.println(res.getHardwareIDs()[0]);
+            for(int i = 0; i<res.getHardwareIDs().length;i++) {
+                System.out.println("Stelle "+i+": "+res.getHardwareIDs()[i]);
+            }
+            /*for(int i : res.getHardwareIDs()) {
+                System.out.println("an "+i+"ter Stelle: "+res.getHardwareIDs()[i]);
+            }*/
+        } catch (JsonMappingException e) {
+            System.out.println(e.getMessage());
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return ResponseEntity.ok("allet jut");
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
