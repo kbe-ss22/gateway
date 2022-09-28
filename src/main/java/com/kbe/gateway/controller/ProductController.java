@@ -1,5 +1,8 @@
 package com.kbe.gateway.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kbe.gateway.rabbitmq.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -45,12 +48,22 @@ public class ProductController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public void createProduct(
-            @RequestParam String name,
-            @RequestParam int[] hardwareIDs
+    public ResponseEntity<String> createProduct(
+            @RequestBody String payload
     ) {
-        System.out.println(hardwareIDs);
-        productSender.sendCreateProduct(name, hardwareIDs);
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            ProductPostEntity res = objectMapper.readValue(payload, ProductPostEntity.class);
+            String name = res.getName();
+            int[] hardwareIDs = res.getHardwareIDs();
+            productSender.sendCreateProduct(name, hardwareIDs);
+            return ResponseEntity.ok("Product has been send to Product Service for Creation.");
+        } catch (JsonMappingException e) {
+            System.out.println(e.getMessage());
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+            return ResponseEntity.ok("Something went wrong");
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
