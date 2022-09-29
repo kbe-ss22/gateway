@@ -21,7 +21,7 @@ public class ProductController {
         if(currencyParam == null) {
             currency = Currency.EUR;
         } else {
-            currency =  Currency.valueOf(currencyParam);
+            currency =  Currency.valueOf(currencyParam.toUpperCase());
         }
 
         Object response = productSender.sendGetProducts(currency);
