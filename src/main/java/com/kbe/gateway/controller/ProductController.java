@@ -19,11 +19,6 @@ public class ProductController {
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<String> getProducts(@RequestParam(required = false) String currencyParam) {
-        Date date = new Date();
-        String dateString = (1900+date.getYear())+"-"+ (date.getMonth()+1)+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes()+":"+ date.getSeconds()+"  ";
-        System.out.println(dateString+"getHardwareComponents triggered");
-        //String json = "{\"id\":0,\"name\":\"wunder\",\"hardware\":[{\"id\":0,\"type\":\"gpu\",\"name\":\"rx 6800\",\"description\":\"fast\",\"price\":222.42,\"stock\":5}";
-
         Currency currency;
         if(currencyParam == null) {
             currency = Currency.EUR;
@@ -39,12 +34,6 @@ public class ProductController {
             return ResponseEntity.ok("error");
         }
     }
-/*
-    @CrossOrigin(origins = "http://localhost:3000")
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
-    public ResponseEntity<String> getProducts() {
-        return getProducts("EUR");
-    }*/
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
