@@ -22,16 +22,6 @@ public class ProductSender {
 
     public void sendCreateProduct(String name, int[] hardwareIds ) {
         APICrudRequest request = new APICrudRequest(-1,name,hardwareIds);
-
-        String stringRequest = null;
-        try {
-            stringRequest = new ObjectMapper().writeValueAsString(request);
-        } catch (JsonProcessingException e) {
-            System.out.println("ERROR: "+e.toString());
-        }
-
-        System.out.println(stringRequest);
-
         rabbitTemplate.convertAndSend(
                 RabbitConfig.CRUDPRODUCTEXCHANGE,
                 RabbitConfig.CREATEPRODUCTROUTINGKEY,

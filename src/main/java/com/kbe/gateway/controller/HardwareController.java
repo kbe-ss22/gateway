@@ -11,23 +11,14 @@ public class HardwareController {
 
     @Autowired
     HardwareSender hardwareSender;
+    @Autowired
+    ControllerUtil controllerUtil;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/hardwarecomponents", method = RequestMethod.GET)
     public ResponseEntity<String> getHardwareComponents(@RequestParam(required = false) String currencyParam) {
-       Currency currency;
-        if(currencyParam == null) {
-            currency = Currency.EUR;
-        } else {
-            currency =  Currency.valueOf(currencyParam);
-        }
-
+        Currency currency = controllerUtil.getCurrencyFromParaM(currencyParam);
         Object response = hardwareSender.sendGetHardware(currency);
-
-        if(response != null) {
-            return ResponseEntity.ok(response.toString());
-        } else {
-            return ResponseEntity.ok("error");
-        }
+        return controllerUtil.handleResponse(response);
     }
 }

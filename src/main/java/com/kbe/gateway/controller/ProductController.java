@@ -13,44 +13,31 @@ public class ProductController {
 
     @Autowired
     ProductSender productSender;
+    @Autowired
+    ControllerUtil controllerUtil;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products", method = RequestMethod.GET)
     public ResponseEntity<String> getProducts(@RequestParam(required = false) String currencyParam) {
-        Currency currency;
-        if(currencyParam == null) {
-            currency = Currency.EUR;
-        } else {
-            currency =  Currency.valueOf(currencyParam.toUpperCase());
-        }
-
+        Currency currency = controllerUtil.getCurrencyFromParaM(currencyParam);
         Object response = productSender.sendGetProducts(currency);
-
-        if(response != null) {
-            return ResponseEntity.ok(response.toString());
-        } else {
-            return ResponseEntity.ok("error");
-        }
+        return controllerUtil.handleResponse(response);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/create", method = RequestMethod.POST)
-    public ResponseEntity<String> createProduct(
-            @RequestBody String payload
-    ) {
-        ObjectMapper objectMapper = new ObjectMapper();
+    public ResponseEntity<String> createProduct(@RequestBody String payload) {
         try {
-            ProductPostEntity res = objectMapper.readValue(payload, ProductPostEntity.class);
-            String name = res.getName();
-            int[] hardwareIDs = res.getHardwareIDs();
-            productSender.sendCreateProduct(name, hardwareIDs);
+            ObjectMapper objectMapper = new ObjectMapper();
+            ProductInfo prodInfo = objectMapper.readValue(payload, ProductInfo.class);
+            productSender.sendCreateProduct(prodInfo.getName(), prodInfo.getHardwareIDs());
             return ResponseEntity.ok("Product has been send to Product Service for Creation.");
         } catch (JsonMappingException e) {
             System.out.println(e.getMessage());
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }
-            return ResponseEntity.ok("Something went wrong");
+        return ResponseEntity.ok("Something went wrong");
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
@@ -65,9 +52,7 @@ public class ProductController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @RequestMapping(value = "/products/delete", method = RequestMethod.DELETE)
-    public void deleteProduct(
-            @RequestParam int id
-    ) {
+    public void deleteProduct(@RequestParam int id ) {
         productSender.sendDeleteProduct(id);
     }
 }

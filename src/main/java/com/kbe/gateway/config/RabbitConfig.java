@@ -89,7 +89,7 @@ public class RabbitConfig {
     @Bean
     public AmqpTemplate template(ConnectionFactory connectionFactory){
         RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(messageConverter()); //template.setMessageConverter(messageConverter());
+        template.setMessageConverter(messageConverter());
         return template;
     }
 }

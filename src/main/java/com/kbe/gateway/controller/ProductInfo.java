@@ -1,6 +1,6 @@
 package com.kbe.gateway.controller;
 
-public class ProductPostEntity  {
+public class ProductInfo {
     private String name;
     private int[] hardwareIDs;
 
