@@ -8,8 +8,15 @@ public class ProductPostEntity  {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public int[] getHardwareIDs() {
         return hardwareIDs;
     }
 
+    public void setHardwareIDs(int[] hardwareIDs) {
+        this.hardwareIDs = hardwareIDs;
+    }
 }
