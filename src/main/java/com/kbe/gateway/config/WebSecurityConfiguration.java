@@ -11,11 +11,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-
-import java.util.Arrays;
 
 @KeycloakConfiguration
 public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapter {
@@ -39,7 +34,6 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
         super.configure(http);
         System.out.println("configuring keycloak");
         http.csrf()
-
                 .disable()
                 .authorizeRequests()
                 .anyRequest()
@@ -48,6 +42,5 @@ public class WebSecurityConfiguration extends KeycloakWebSecurityConfigurerAdapt
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.cors();;
-
     }
 }

@@ -11,9 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    //get
     public static final String GETINFORMATIONEXCHANGE = "get-information-exchange";
-    //post delte update
     public static final String CRUDPRODUCTEXCHANGE = "crud-product-exchange";
 
     public static final String GETHARDWAREQUEUE = "get-hardware-queue";
@@ -58,25 +56,30 @@ public class RabbitConfig {
         return new Queue(DELETEPRODUCTQUEUE, false);
     }
 
-
     @Bean
     public Binding hardwareBinding() {
         return BindingBuilder.bind(getHardwareQueue()).to(getInformationExchange()).with(GETHARDWAREROUTINGKEY);
     }
+
     @Bean
     public Binding productsBinding() {
         return BindingBuilder.bind(getProductsQueue()).to(getInformationExchange()).with(GETPRODUCTSROUTINGKEY);
-    }@Bean
+    }
+
+    @Bean
     public Binding createBinding() {
         return BindingBuilder.bind(createProductQueue()).to(crudProductExchange()).with(CREATEPRODUCTROUTINGKEY);
-    }@Bean
+    }
+
+    @Bean
     public Binding updateBinding() {
         return BindingBuilder.bind(updateProductQueue()).to(crudProductExchange()).with(UPDATEPRODUCTROUTINGKEY);
-    }@Bean
+    }
+
+    @Bean
     public Binding deleteBinding() {
         return BindingBuilder.bind(deleteProductQueue()).to(crudProductExchange()).with(DELETEPRODUCTROUTINGKEY);
     }
-
 
     @Bean
     public MessageConverter messageConverter(){
@@ -89,5 +92,4 @@ public class RabbitConfig {
         template.setMessageConverter(messageConverter()); //template.setMessageConverter(messageConverter());
         return template;
     }
-
 }

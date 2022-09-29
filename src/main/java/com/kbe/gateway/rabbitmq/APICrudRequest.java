@@ -1,8 +1,5 @@
 package com.kbe.gateway.rabbitmq;
 
-import org.springframework.context.annotation.Bean;
-
-
 public class APICrudRequest {
     private int id;
     private String name;
@@ -40,5 +37,3 @@ public class APICrudRequest {
         return hardwareIds;
     }
 }
-
-
